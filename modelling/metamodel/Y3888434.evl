@@ -1,0 +1,55 @@
+context Application {
+	
+	// Check that the start month is > 0
+	constraint ValidStart {
+		check: self.microservices.size > 0
+		message: "Must have at least one microservice initialised"
+	}
+}
+
+context Microservice {
+	
+	// Ensure 1 healthcheck method exists
+	constraint healthCheck {
+		check: self.controllers.select(c|c.httpResources.select(
+			h|h.typedParameters.size()=0 and h.methodType = MethodType#Get).size()>0)
+			.size() >= 1
+
+		message: self.name + 
+			" service has no healthcheck"
+	}
+}
+
+context Event {
+	
+	// Check it's used in at least one stream
+	constraint isUsed {
+		check: EventStream.all.
+			exists(s|s.subscribesTo = self)
+
+		message: self.name + 
+			" is not published to any eventStream"
+	}
+}
+
+context EventStream {
+	
+	// Check that the has both a subscriber and publisher
+	critique HasSubscriber {
+		// Subscribed to
+		check: Microservice.all.
+			exists(m|m.subscribesTo.contains(self))
+
+		message: self.name + 
+			" has no consumers"
+	}
+	
+	constraint HasPublisher {
+		// Subscribed to
+		check: HttpResource.all.
+			exists(h|h.publishes.contains(self.subscribesTo))
+
+		message: self.subscribesTo.name + 
+			" has no producers, " + self.name + " receives no data"
+	}
+}

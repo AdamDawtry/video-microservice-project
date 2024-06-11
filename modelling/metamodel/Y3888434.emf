@@ -1,0 +1,53 @@
+@namespace(uri="Y3888434", prefix="")
+package Application;
+
+class Application {
+	attr String name;
+	val Client[+] clients;
+	val Microservice[+] microservices;
+	val Event[*] events;
+	val EventStream[*] eventStreams;
+}
+
+class Microservice {
+	attr String name;
+	val Controller[+] controllers;
+	ref EventStream[*] subscribesTo;
+}
+
+class Controller {
+	attr String name;
+	attr String baseURL;
+    val HttpResource[+] httpResources;
+}
+
+class Client {
+	attr String name;
+	ref Controller controller;
+}
+
+class Event {
+    attr String name;
+    attr String[*] typedFields;
+}
+
+class EventStream {
+    attr String name;
+    ref Event subscribesTo;
+}
+
+enum MethodType {
+    Get;
+    Post;
+    Put;
+    Delete;
+}
+
+class HttpResource {
+    attr String name;
+    attr String resourceURL;
+    attr MethodType methodType;
+    attr String[*] typedParameters;
+    attr String returns;
+    ref Event[*] publishes;
+}

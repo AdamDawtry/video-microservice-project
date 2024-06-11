@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" uid="_yyjl4MT5Ee6s4rTx4KfngQ" version="15.1.0.202211301600">
+  <semanticResources>metamodel/Y3888434.ecore</semanticResources>
+  <semanticResources>metamodel/Y3888434.ecore_diagram</semanticResources>
+</viewpoint:DAnalysis>

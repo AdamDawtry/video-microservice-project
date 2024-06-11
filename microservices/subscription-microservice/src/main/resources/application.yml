@@ -1,0 +1,31 @@
+micronaut:
+  application:
+    name: subscriptionMicroservice
+  server:
+    port: 8082
+datasources:
+  default:
+    url: jdbc:mariadb://${DB_HOST:`localhost:3306`}/${DB_NAME:subscriptions_database}
+    username: ${DB_USER:todo}
+    password: ${DB_PASSWORD:todosecret}
+    driver-class-name: org.mariadb.jdbc.Driver
+    db-type: mariadb
+    dialect: MYSQL
+jpa:
+  default:
+    properties:
+      hibernate:
+        show_sql: ${DEBUG_SQL:false}
+        format_sql: ${DEBUG_SQL:false}
+        hbm2ddl:
+          auto: update
+    entity-scan:
+      packages: 
+        - microservice.site.subscription.domain
+kafka:
+  bootstrap:
+    servers: ${KAFKA_BOOTSTRAP_SERVERS:`localhost:9094`}
+netty:
+  default:
+    allocator:
+      max-order: 3

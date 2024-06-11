@@ -1,0 +1,18 @@
+rule BuildControllers
+    transform controller : Controller {
+
+    template: "controller.egl"
+    
+    target: "gen\\controllers\\"+controller.name+".java"
+}
+
+rule BuildClients
+	transform client : Client {
+	template: "client.egl"
+    
+    target: "gen\\clients\\"+client.name+".java"
+}
+
+operation String getShortName() {
+	return self.split("-").first;
+}

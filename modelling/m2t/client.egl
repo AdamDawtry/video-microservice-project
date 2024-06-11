@@ -1,0 +1,23 @@
+package // TODO;
+
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
+import io.micronaut.http.annotation.Delete;
+
+//Generated client interface, double check the port is correct
+@Client("${[%=client.name.getFirstPart()%].url:`http://localhost:8080/[%=client.name.getFirstPart()%]`}") 
+public interface [%=client.name%]{
+	[%for (resource in client.controller.httpResources) {%]
+	
+	@[%=resource.methodType%]("[%=resource.resourceURL%]")
+	public [%=resource.returns%] [%=resource.name%]([%=resource.typedParameters.concat(", ")%]);
+	[%}%]
+}
+
+[%
+operation String getFirstPart() {
+	return self.split("(?=\\p{Upper})").get(0).toLowerCase();
+}
+%]

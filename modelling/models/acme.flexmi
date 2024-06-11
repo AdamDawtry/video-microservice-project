@@ -1,0 +1,104 @@
+<Application name="Application">
+  <clients name="VideosClient" controller="_I_hs0L3zEe6aINOpfgOfvw"/>
+  <clients name="UsersClient" controller="_YTwIAL33Ee6aINOpfgOfvw"/>
+  <clients name="TrendingClient" controller="_FPAEsL33Ee6aINOpfgOfvw"/>
+  <clients name="SubscriptionsClient" controller="_G45asL33Ee6aINOpfgOfvw"/>
+  <microservices name="video-microservice">
+    <controllers name="VideosController" baseURL="/videos">
+      <httpResources name="healthCheck" resourceURL="/" returns="HttpResponse&lt;Void>"/>
+      <httpResources name="postVideo" resourceURL="/" methodType="Post" returns="HttpResponse&lt;Void>" publishes="video-post">
+        <typedParameters>VideoCreationDTO videoInfo</typedParameters>
+      </httpResources>
+      <httpResources name="getLikes" resourceURL="/{videoId}/likes" returns="int">
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources name="getDislikes" resourceURL="/{videoId}/dislikes" returns="int">
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources name="getTags" resourceURL="/{videoId}/tags" returns="Iterable&lt;String>">
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources name="getViews" resourceURL="/{videoId}/views" returns="int">
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+    </controllers>
+    <controllers name="UsersController" baseURL="/users">
+      <httpResources name="likeVideo" resourceURL="/{username}/likes/{videoId}" methodType="Put" returns="HttpResponse&lt;String>" publishes="video-like tags-like">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources name="dislikeVideo" resourceURL="/{username}/dislikes/{videoId}" methodType="Put" returns="HttpResponse&lt;String>" publishes="video-dislike">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources name="watchVideo" resourceURL="/{username}/views/{videoId}" methodType="Put" returns="HttpResponse&lt;String>" publishes="video-watch">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources name="getUsersUploads" resourceURL="/uploads" returns="Iterable&lt;Video>">
+        <typedParameters>String username</typedParameters>
+      </httpResources>
+      <httpResources name="postUser" resourceURL="/" methodType="Post" returns="HttpResponse&lt;Void>">
+        <typedParameters>String username</typedParameters>
+      </httpResources>
+    </controllers>
+  </microservices>
+  <microservices name="subscription-microservice">
+    <controllers name="SubscriptionsController" baseURL="/subscriptions">
+      <httpResources name="healthCheck" resourceURL="/" returns="HttpResponse&lt;Void>"/>
+      <httpResources name="subscribeToTag" resourceURL="/{username}/{tag}" methodType="Put" returns="HttpResponse&lt;String>" publishes="user-subscribed">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>String tag</typedParameters>
+      </httpResources>
+      <httpResources name="unsubscribeFromTag" resourceURL="/{username}/{tag}" methodType="Delete" returns="HttpResponse&lt;String>" publishes="user-unsubscribed">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>String tag</typedParameters>
+      </httpResources>
+      <httpResources name="topTenRecs" resourceURL="/{username}/recommended" returns="Iterable&lt;Video>">
+        <typedParameters>String username</typedParameters>
+      </httpResources>
+    </controllers>
+  </microservices>
+  <microservices name="trending-microservice">
+    <controllers name="TrendingTagsController" baseURL="/trending">
+      <httpResources name="healthCheck" resourceURL="/" returns="HttpResponse&lt;Void>"/>
+      <httpResources name="topTenTags" resourceURL="/" returns="Map&lt;String, Long>"/>
+    </controllers>
+  </microservices>
+  <events name="tags-like">
+    <typedFields>String tag</typedFields>
+    <typedFields>long videoId</typedFields>
+  </events>
+  <events name="video-like">
+    <typedFields>long videoId</typedFields>
+    <typedFields>Video video</typedFields>
+  </events>
+  <events name="video-post">
+    <typedFields>long videoId</typedFields>
+    <typedFields>Video video</typedFields>
+  </events>
+  <events name="video-watch">
+    <typedFields>long videoId</typedFields>
+    <typedFields>Video video</typedFields>
+  </events>
+  <events name="video-dislike">
+    <typedFields>long videoId</typedFields>
+    <typedFields>Video video</typedFields>
+  </events>
+  <events name="user-subscribed">
+    <typedFields>String username</typedFields>
+    <typedFields>String tag</typedFields>
+  </events>
+  <events name="user-unsubscribed">
+    <typedFields>String username</typedFields>
+    <typedFields>String tag</typedFields>
+  </events>
+  <eventStreams name="tags-liked" subscribesTo="tags-like"/>
+  <eventStreams name="videos-liked" subscribesTo="video-like"/>
+  <eventStreams name="tags-liked-by-hour" subscribesTo="tags-like"/>
+  <eventStreams name="videos-posted" subscribesTo="video-post"/>
+  <eventStreams name="videos-watched" subscribesTo="video-watch"/>
+  <eventStreams name="videos-disliked" subscribesTo="video-dislike"/>
+  <eventStreams name="users-subscribed" subscribesTo="user-subscribed"/>
+  <eventStreams name="users-unsubscribed" subscribesTo="user-unsubscribed"/>
+</Application>

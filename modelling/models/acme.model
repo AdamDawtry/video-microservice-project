@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ASCII"?>
+<Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="Y3888434" xmi:id="__GB4IL3yEe6aINOpfgOfvw">
+  <clients xmi:id="__sVDIL3yEe6aINOpfgOfvw" name="VideosClient" controller="_I_hs0L3zEe6aINOpfgOfvw"/>
+  <clients xmi:id="_u6hWAL32Ee6aINOpfgOfvw" name="UsersClient" controller="_YTwIAL33Ee6aINOpfgOfvw"/>
+  <clients xmi:id="_KfppgL34Ee6aINOpfgOfvw" name="TrendingClient" controller="_FPAEsL33Ee6aINOpfgOfvw"/>
+  <clients xmi:id="_ytSyIL34Ee6aINOpfgOfvw" name="SubscriptionsClient" controller="_G45asL33Ee6aINOpfgOfvw"/>
+  <microservices xmi:id="_AiyxEL3zEe6aINOpfgOfvw" name="video-microservice">
+    <controllers xmi:id="_I_hs0L3zEe6aINOpfgOfvw" name="VideosController" baseURL="/videos">
+      <httpResources xmi:id="_MEvxUL3zEe6aINOpfgOfvw" name="healthCheck" resourceURL="/" returns="HttpResponse&lt;Void>"/>
+      <httpResources xmi:id="_3NiqML34Ee6aINOpfgOfvw" name="postVideo" resourceURL="/" methodType="Post" returns="HttpResponse&lt;Void>" publishes="_6nbzoL33Ee6aINOpfgOfvw">
+        <typedParameters>VideoCreationDTO videoInfo</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_Fg0ikL35Ee6aINOpfgOfvw" name="getLikes" resourceURL="/{videoId}/likes" returns="int">
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_IzFkkL35Ee6aINOpfgOfvw" name="getDislikes" resourceURL="/{videoId}/dislikes" returns="int">
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_K2wsgL35Ee6aINOpfgOfvw" name="getTags" resourceURL="/{videoId}/tags" returns="Iterable&lt;String>">
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_NlY18L35Ee6aINOpfgOfvw" name="getViews" resourceURL="/{videoId}/views" returns="int">
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+    </controllers>
+    <controllers xmi:id="_YTwIAL33Ee6aINOpfgOfvw" name="UsersController" baseURL="/users">
+      <httpResources xmi:id="_CHjoEL32Ee6aINOpfgOfvw" name="likeVideo" resourceURL="/{username}/likes/{videoId}" methodType="Put" returns="HttpResponse&lt;String>" publishes="_AR2yEL3zEe6aINOpfgOfvw _J_FlAL32Ee6aINOpfgOfvw">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_1eVL0L33Ee6aINOpfgOfvw" name="dislikeVideo" resourceURL="/{username}/dislikes/{videoId}" methodType="Put" returns="HttpResponse&lt;String>" publishes="_AnNkwL34Ee6aINOpfgOfvw">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_gXwv0L35Ee6aINOpfgOfvw" name="watchVideo" resourceURL="/{username}/views/{videoId}" methodType="Put" returns="HttpResponse&lt;String>" publishes="_9_hw0L33Ee6aINOpfgOfvw">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>long videoId</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_j3togL35Ee6aINOpfgOfvw" name="getUsersUploads" resourceURL="/uploads" returns="Iterable&lt;Video>">
+        <typedParameters>String username</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_n4lc8L35Ee6aINOpfgOfvw" name="postUser" resourceURL="/" methodType="Post" returns="HttpResponse&lt;Void>">
+        <typedParameters>String username</typedParameters>
+      </httpResources>
+    </controllers>
+  </microservices>
+  <microservices xmi:id="_l1BxIL32Ee6aINOpfgOfvw" name="subscription-microservice">
+    <controllers xmi:id="_G45asL33Ee6aINOpfgOfvw" name="SubscriptionsController" baseURL="/subscriptions">
+      <httpResources xmi:id="_LpATsL33Ee6aINOpfgOfvw" name="healthCheck" resourceURL="/" returns="HttpResponse&lt;Void>"/>
+      <httpResources xmi:id="__atDcL35Ee6aINOpfgOfvw" name="subscribeToTag" resourceURL="/{username}/{tag}" methodType="Put" returns="HttpResponse&lt;String>" publishes="_2Qf9sL35Ee6aINOpfgOfvw">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>String tag</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_GOLiYL36Ee6aINOpfgOfvw" name="unsubscribeFromTag" resourceURL="/{username}/{tag}" methodType="Delete" returns="HttpResponse&lt;String>" publishes="_85qDAL35Ee6aINOpfgOfvw">
+        <typedParameters>String username</typedParameters>
+        <typedParameters>String tag</typedParameters>
+      </httpResources>
+      <httpResources xmi:id="_Pd0hwL36Ee6aINOpfgOfvw" name="topTenRecs" resourceURL="/{username}/recommended" returns="Iterable&lt;Video>">
+        <typedParameters>String username</typedParameters>
+      </httpResources>
+    </controllers>
+  </microservices>
+  <microservices xmi:id="_mJjPoL32Ee6aINOpfgOfvw" name="trending-microservice">
+    <controllers xmi:id="_FPAEsL33Ee6aINOpfgOfvw" name="TrendingTagsController" baseURL="/trending">
+      <httpResources xmi:id="_O0ibkL33Ee6aINOpfgOfvw" name="healthCheck" resourceURL="/" returns="HttpResponse&lt;Void>"/>
+      <httpResources xmi:id="_vsKuAL35Ee6aINOpfgOfvw" name="topTenTags" resourceURL="/" returns="Map&lt;String, Long>"/>
+    </controllers>
+  </microservices>
+  <events xmi:id="_AR2yEL3zEe6aINOpfgOfvw" name="tags-like">
+    <typedFields>String tag</typedFields>
+    <typedFields>long videoId</typedFields>
+  </events>
+  <events xmi:id="_J_FlAL32Ee6aINOpfgOfvw" name="video-like">
+    <typedFields>long videoId</typedFields>
+    <typedFields>Video video</typedFields>
+  </events>
+  <events xmi:id="_6nbzoL33Ee6aINOpfgOfvw" name="video-post">
+    <typedFields>long videoId</typedFields>
+    <typedFields>Video video</typedFields>
+  </events>
+  <events xmi:id="_9_hw0L33Ee6aINOpfgOfvw" name="video-watch">
+    <typedFields>long videoId</typedFields>
+    <typedFields>Video video</typedFields>
+  </events>
+  <events xmi:id="_AnNkwL34Ee6aINOpfgOfvw" name="video-dislike">
+    <typedFields>long videoId</typedFields>
+    <typedFields>Video video</typedFields>
+  </events>
+  <events xmi:id="_2Qf9sL35Ee6aINOpfgOfvw" name="user-subscribed">
+    <typedFields>String username</typedFields>
+    <typedFields>String tag</typedFields>
+  </events>
+  <events xmi:id="_85qDAL35Ee6aINOpfgOfvw" name="user-unsubscribed">
+    <typedFields>String username</typedFields>
+    <typedFields>String tag</typedFields>
+  </events>
+  <eventStreams xmi:id="__-QgoL3yEe6aINOpfgOfvw" name="tags-liked" subscribesTo="_AR2yEL3zEe6aINOpfgOfvw"/>
+  <eventStreams xmi:id="_OAe94L32Ee6aINOpfgOfvw" name="videos-liked" subscribesTo="_J_FlAL32Ee6aINOpfgOfvw"/>
+  <eventStreams xmi:id="_4jC6AL33Ee6aINOpfgOfvw" name="tags-liked-by-hour" subscribesTo="_AR2yEL3zEe6aINOpfgOfvw"/>
+  <eventStreams xmi:id="_tFHBoL34Ee6aINOpfgOfvw" name="videos-posted" subscribesTo="_6nbzoL33Ee6aINOpfgOfvw"/>
+  <eventStreams xmi:id="_uYmp0L34Ee6aINOpfgOfvw" name="videos-watched" subscribesTo="_9_hw0L33Ee6aINOpfgOfvw"/>
+  <eventStreams xmi:id="_wHhpwL34Ee6aINOpfgOfvw" name="videos-disliked" subscribesTo="_AnNkwL34Ee6aINOpfgOfvw"/>
+  <eventStreams xmi:id="_LAqZ8L36Ee6aINOpfgOfvw" name="users-subscribed" subscribesTo="_2Qf9sL35Ee6aINOpfgOfvw"/>
+  <eventStreams xmi:id="_NPdz0L36Ee6aINOpfgOfvw" name="users-unsubscribed" subscribesTo="_85qDAL35Ee6aINOpfgOfvw"/>
+</Application>

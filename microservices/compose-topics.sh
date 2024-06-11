@@ -1,0 +1,10 @@
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic video-watch --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic video-post --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic video-like --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic video-dislike --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic tags-like --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic liked-by-hour --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic tag-create --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic user-create --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic user-subscribe --replication-factor 3 --partitions 6
+docker compose -f compose-prod.yml exec -e JMX_PORT= kafka-0 kafka-topics.sh --bootstrap-server kafka-0:9092 --create --topic user-unsubscribe --replication-factor 3 --partitions 6

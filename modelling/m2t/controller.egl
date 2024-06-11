@@ -1,0 +1,32 @@
+package // TODO;
+
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
+import io.micronaut.http.annotation.Delete;
+
+@Controller("[%=controller.baseURL%]")
+public class [%=controller.name%] {
+	// Inject resources
+	
+	[%for (hr in controller.httpResources) {%]
+	
+	@[%=hr.methodType%]("[%=hr.resourceURL%]")
+	public [%=hr.returns%] [%=hr.name%]([%=hr.typedParameters.concat(", ")%]) {
+		//Generated stub
+		[%if (not hr.publishes.isEmpty()) {%]
+		//TODO: Method should produce event(s): [%=hr.publishes.name.concat(", ")%]
+		[%}%]
+		return null;
+	}
+	[%}%]
+}
+
+[%
+operation String getShortName() {
+	return self.split("-").first;
+}
+%]
